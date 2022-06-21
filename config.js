@@ -20,8 +20,8 @@ global.APIKeys = {
 // Other
 global.owner = ['6289525919489','6285649812379']
 global.premium = ['6285649812379','6289525919489']
-global.packname = 'Bima Bot
-global.author = 'Whatsap Bot'
+global.packname = 'Deaa Wibusoft'
+global.author = 'Deaa Wibusoft'
 global.sessionName = 'hisoka'
 global.prefa = ['','!','.','🐦','🐤','🗿']
 global.sp = '⭔'
