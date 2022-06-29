@@ -50,7 +50,6 @@ module.exports = hisoka = async (hisoka, m, chatUpdate, store) => {
         const quoted = m.quoted ? m.quoted : m
         const mime = (quoted.msg || quoted).mimetype || ''
         const isMedia = /image|video|sticker|audio/.test(mime)
-	    const reply = (teks) => { return hisoka.sendMessage(m.chat, {text: teks, contextInfo:{"externalAdReply":{"title": `Halo ${pushname}`,"body": `Fatib Arridho`, "mediaType": 1, "thumbnail": global.thumb,"sourceUrl": 'https://chat.whatsapp.com/KCAARVQ8QPiITHriAkSwqJ' }}}, { quoted: m })}
 	
         // Group
         const groupMetadata = m.isGroup ? await hisoka.groupMetadata(m.chat).catch(e => {}) : ''
@@ -537,7 +536,7 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`
             }
             break
             case 'sc': {
-                m.reply('Script : https://github.com/DikaArdnt/Hisoka-Morou\n\n Dont Forget Give Star\n\nDonate : 6281615075793 (Link Aja)\nSaweria : https://saweria.co/DikaArdnt\nPaypal : https://www.paypal.me/Cakhaho\n\n Dont Forget Donate')
+                m.reply('Script : Enc Aja Di Jual Aplagi No E\n\n Buy Sc Nya Bang Murmer Kok')
             }
             break
             case 'chat': {
@@ -810,9 +809,9 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`
             break
           case 'setppbot': {
                 if (!isCreator) throw mess.owner
-                if (!quoted) throw `Kirim/Reply Image Dengan Caption ${prefix + command}`
-                if (!/image/.test(mime)) throw `Kirim/Reply Image Dengan Caption ${prefix + command}`
-                if (/webp/.test(mime)) throw `Kirim/Reply Image Dengan Caption ${prefix + command}`
+                if (!quoted) throw `Kirim/Reply Image Dengan Ketik ${prefix + command}`
+                if (!/image/.test(mime)) throw `Kirim/Reply Gambar Dengan Ketik ${prefix + command}`
+                if (/webp/.test(mime)) throw `Kirim/Reply Gambar Dengan Ketik ${prefix + command}`
                 let media = await hisoka.downloadAndSaveMediaMessage(quoted)
                 await hisoka.updateProfilePicture(botNumber, { url: media }).catch((err) => fs.unlinkSync(media))
                 m.reply(mess.success)
@@ -821,9 +820,9 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`
            case 'setppgroup': case 'setppgrup': case 'setppgc': {
                 if (!m.isGroup) throw mess.group
                 if (!isAdmins) throw mess.admin
-                if (!quoted) throw `Kirim/Reply Image Dengan Caption ${prefix + command}`
-                if (!/image/.test(mime)) throw `Kirim/Reply Image Dengan Caption ${prefix + command}`
-                if (/webp/.test(mime)) throw `Kirim/Reply Image Dengan Caption ${prefix + command}`
+                if (!quoted) throw `Kirim/Reply Gambar Dengan Caption ${prefix + command}`
+                if (!/image/.test(mime)) throw `Kirim/Reply Gambar Dengan Caption ${prefix + command}`
+                if (/webp/.test(mime)) throw `Kirim/Reply Gambar Dengan Caption ${prefix + command}`
                 let media = await hisoka.downloadAndSaveMediaMessage(quoted)
                 await hisoka.updateProfilePicture(m.chat, { url: media }).catch((err) => fs.unlinkSync(media))
                 m.reply(mess.success)
@@ -832,8 +831,9 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`
             case 'tagall': {
                 if (!m.isGroup) throw mess.group
                 if (!isBotAdmins) throw mess.botAdmin
+                if (!isCreator) throw mess.owner
                 if (!isAdmins) throw mess.admin
-let teks = `══✪〘 *👥 Tag All* 〙✪══
+let teks = `══✪〘 *👥 Semua Member Grup* 〙✪══
  
  ➲ *Pesan : ${q ? q : 'kosong'}*\n\n`
                 for (let mem of participants) {
@@ -845,6 +845,7 @@ let teks = `══✪〘 *👥 Tag All* 〙✪══
                 case 'hidetag': {
             if (!m.isGroup) throw mess.group
             if (!isBotAdmins) throw mess.botAdmin
+            if (!isCreator) throw mess.owner
             if (!isAdmins) throw mess.admin
             hisoka.sendMessage(m.chat, { text : q ? q : '' , mentions: participants.map(a => a.id)}, { quoted: m })
             }
@@ -1029,9 +1030,9 @@ break
                 if (!isBotAdmins) throw mess.botAdmin
                 if (!isAdmins) throw mess.admin
                 if (args[0] === 'close'){
-                    await hisoka.groupSettingUpdate(m.chat, 'announcement').then((res) => m.reply(`Sukses Menutup Group`)).catch((err) => m.reply(jsonformat(err)))
+                    await hisoka.groupSettingUpdate(m.chat, 'announcement').then((res) => m.reply(`Done Sudah Menutup Group Min`)).catch((err) => m.reply(jsonformat(err)))
                 } else if (args[0] === 'open'){
-                    await hisoka.groupSettingUpdate(m.chat, 'not_announcement').then((res) => m.reply(`Sukses Membuka Group`)).catch((err) => m.reply(jsonformat(err)))
+                    await hisoka.groupSettingUpdate(m.chat, 'not_announcement').then((res) => m.reply(`Done Sudah Membuka Group Min`)).catch((err) => m.reply(jsonformat(err)))
                 } else {
                 let buttons = [
                         { buttonId: 'group open', buttonText: { displayText: 'Open' }, type: 1 },
@@ -1063,15 +1064,16 @@ break
             case 'antilink': {
                 if (!m.isGroup) throw mess.group
                 if (!isBotAdmins) throw mess.botAdmin
+                if (!isCreator) throw mess.owner
                 if (!isAdmins) throw mess.admin
                 if (args[0] === "on") {
-                if (db.data.chats[m.chat].antilink) return m.reply(`Sudah Aktif Sebelumnya`)
+                if (db.data.chats[m.chat].antilink) return m.reply(`Sepertinya Sudah Aktif Sebelumnya Min`)
                 db.data.chats[m.chat].antilink = true
-                m.reply(`Antilink Aktif !`)
+                m.reply(`Antilink Aktif Min !`)
                 } else if (args[0] === "off") {
-                if (!db.data.chats[m.chat].antilink) return m.reply(`Sudah Tidak Aktif Sebelumnya`)
+                if (!db.data.chats[m.chat].antilink) return m.reply(`Sepertinya Sudah Tidak Aktif Sebelumnya Min`)
                 db.data.chats[m.chat].antilink = false
-                m.reply(`Antilink Tidak Aktif !`)
+                m.reply(`Antilink Tidak Aktif Min !`)
                 } else {
                  let buttons = [
                         { buttonId: 'antilink on', buttonText: { displayText: 'On' }, type: 1 },
@@ -1137,14 +1139,14 @@ break
                 for (let i of anu) {
                     await sleep(1500)
                     let btn = [{
-                                urlButton: {
-                                    displayText: 'Source Code',
-                                    url: 'https://github.com/DikaArdnt/Hisoka-Morou'
+                                quickReplyButton: {
+                                    displayText: 'Tutor Jadi Bot Dong Min',
+                                    id: 'owner'
                                 }
                             }, {
-                                callButton: {
-                                    displayText: 'Number Phone Owner',
-                                    phoneNumber: '+62 882-9202-4190'
+                                quickReplyButton: {
+                                    displayText: 'Sewa Bot / Jadi Bot 5k',
+                                    id: 'owner'
                                 }
                             }, {
                                 quickReplyButton: {
@@ -1157,9 +1159,9 @@ break
                                     id: 'owner'
                                 }  
                             }, {
-                                quickReplyButton: {
-                                    displayText: 'Script',
-                                    id: 'sc'
+                                urlButton: {
+                                    displayText: 'Group Wa Have Fun',
+                                    url: 'BELUM ADA SIH BANG WKKW'
                                 }
                             }]
                       let txt = `「 Broadcast Bot 」\n\n${text}`
@@ -1176,14 +1178,14 @@ break
 		for (let yoi of anu) {
 		    await sleep(1500)
 		    let btn = [{
-                                urlButton: {
-                                    displayText: 'Source Code',
-                                    url: 'https://github.com/DikaArdnt/Hisoka-Morou'
+                                quickReplyButton: {
+                                    displayText: 'Tutor Jadi Bot Dong Min',
+                                    id: 'owner'
                                 }
                             }, {
-                                callButton: {
-                                    displayText: 'Number Phone Owner',
-                                    phoneNumber: '+62 882-9202-4190'
+                                quickReplyButton: {
+                                    displayText: 'Sewa Bot / Jadi Bot 5k',
+                                    id: 'owner'
                                 }
                             }, {
                                 quickReplyButton: {
@@ -1196,9 +1198,9 @@ break
                                     id: 'owner'
                                 }  
                             }, {
-                                quickReplyButton: {
-                                    displayText: 'Script',
-                                    id: 'sc'
+                                urlButton: {
+                                    displayText: 'Group Wa Have Fun',
+                                    url: 'BELUM ADA SIH BANG WKKW'
                                 }
                             }]
                       let txt = `「 Broadcast Bot 」\n\n${text}`
@@ -2524,14 +2526,7 @@ _CPU Core(s) Usage (${cpus.length} Core CPU)_
 ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Object.keys(cpu.times).map(type => `- *${(type + '*').padEnd(6)}: ${(100 * cpu.times[type] / cpu.total).toFixed(2)}%`).join('\n')}`).join('\n\n')}` : ''}
                 `.trim()
                 m.reply(respon)
-                  let btn = [{
-                                urlButton: {
-                                    displayText: 'Source Code',
-                                    url: 'https://github.com/DikaArdnt/Hisoka-Morou'
-                                }
-                            }]
-                        hisoka.send5ButImg(m.chat, anu, hisoka.user.name, global.thumb, btn)
-                     }
+            }
             break
             case 'speedtest': {
             m.reply('Testing Speed...')
@@ -2555,7 +2550,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
             }
             break
             case 'list': case 'menu': case 'help': case '?': {
-                anu = `┌──⭓ *Group Menu*
+                anu = `┌──⭓ *Khusus Group*
 │
 │⭔ ${prefix}linkgroup
 │⭔ ${prefix}ephemeral [option]
@@ -2600,7 +2595,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
 │
 └───────⭓
 
-┌──⭓ *Search Menu*
+┌──⭓ *Mencari Sesuatu Tidak Penting -Menu*
 │
 │⭔ ${prefix}play [query]
 │⭔ ${prefix}yts [query]
@@ -2615,7 +2610,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
 │
 └───────⭓
 
-┌──⭓ *Random Menu*
+┌──⭓ *Gabut Menu*
 │
 │⭔ ${prefix}coffe
 │⭔ ${prefix}quotesanime
@@ -2637,7 +2632,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
 │
 └───────⭓
 
-┌──⭓ *Text Pro Menu*
+┌──⭓ *Tulisan Keren Menu*
 │
 │⭔ ${prefix}3dchristmas
 │⭔ ${prefix}3ddeepsea
@@ -2673,7 +2668,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
 │
 └───────⭓
 
-┌──⭓ *Photo Oxy Menu*
+┌──⭓ *Poto Kemren Menu*
 │
 │⭔ ${prefix}shadow
 │⭔ ${prefix}romantic
@@ -2704,7 +2699,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
 │
 └───────⭓
 
-┌──⭓ *Fun Menu*
+┌──⭓ *Gaje Menu*
 │
 │⭔ ${prefix}halah
 │⭔ ${prefix}hilih
@@ -2757,7 +2752,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
 │
 └───────⭓
 
-┌──⭓ *Convert Menu*
+┌──⭓ *Mengubah Foto Menu*
 │
 │⭔ ${prefix}toimage
 │⭔ ${prefix}removebg
@@ -2840,7 +2835,7 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
 │
 └───────⭓
 
-┌──⭓ *Owner Menu*
+┌──⭓ *Khusus Owner Deckk*
 │
 │⭔ ${prefix}react [emoji]
 │⭔ ${prefix}chat [option]
@@ -2855,14 +2850,14 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
 │
 └───────⭓`
                 let btn = [{
-                                urlButton: {
-                                    displayText: 'Source Code',
-                                    url: 'https://github.com/DikaArdnt/Hisoka-Morou'
+                                quickReplyButton: {
+                                    displayText: 'Tutor Jadi Bot Dong Min',
+                                    id: 'owner'
                                 }
                             }, {
-                                callButton: {
-                                    displayText: 'Number Phone Owner',
-                                    phoneNumber: '+62 882-9202-4190'
+                                quickReplyButton: {
+                                    displayText: 'Sewa Bot / Jadi Bot 5k',
+                                    id: 'owner'
                                 }
                             }, {
                                 quickReplyButton: {
@@ -2875,9 +2870,9 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
                                     id: 'owner'
                                 }  
                             }, {
-                                quickReplyButton: {
-                                    displayText: 'Script',
-                                    id: 'sc'
+                                urlButton: {
+                                    displayText: 'Group Wa Have Fun',
+                                    url: 'BELUM ADA SIH BANG WKKW'
                                 }
                             }]
                         hisoka.send5ButImg(m.chat, anu, hisoka.user.name, global.thumb, btn)
