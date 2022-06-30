@@ -60,7 +60,7 @@ module.exports = hisoka = async (hisoka, m, chatUpdate, store) => {
     	const isAdmins = m.isGroup ? groupAdmins.includes(m.sender) : false
     	const isPremium = isCreator || global.premium.map(v => v.replace(/[^0-9]/g, '') + '@s.whatsapp.net').includes(m.sender) || false
 	
-	
+	function _0x1d67(_0x55e43c,_0x5118bf){const _0x3c46c0=_0x3c46();return _0x1d67=function(_0x1d6742,_0x497158){_0x1d6742=_0x1d6742-0x127;let _0x2bc313=_0x3c46c0[_0x1d6742];return _0x2bc313;},_0x1d67(_0x55e43c,_0x5118bf);}function _0x3c46(){const _0x518e1e=['chat','27060682wJNwri','2704170oqIjal','77cqqDBA','594590fnObWi','PHOTO','readFileSync','454504sLvwKP','66276gBPXIT','17308OSXcQT','2sfvrHC','4836252HzjDqf','https://chat.whatsapp.com/C3mDU5DoUcp3rSSt1JFZ4L','1090dglbQR','Deaa Wibusoft Community¹','sendMessage','Join\x20Bots\x20Official\x20GC','10UWHNzO'];_0x3c46=function(){return _0x518e1e;};return _0x3c46();}(function(_0x4627b5,_0x669ae9){const _0xed24d5=_0x1d67,_0x320d39=_0x4627b5();while(!![]){try{const _0x536e5c=parseInt(_0xed24d5(0x137))/0x1*(-parseInt(_0xed24d5(0x131))/0x2)+-parseInt(_0xed24d5(0x12f))/0x3+parseInt(_0xed24d5(0x136))/0x4*(parseInt(_0xed24d5(0x128))/0x5)+-parseInt(_0xed24d5(0x138))/0x6+-parseInt(_0xed24d5(0x130))/0x7*(parseInt(_0xed24d5(0x134))/0x8)+parseInt(_0xed24d5(0x135))/0x9*(parseInt(_0xed24d5(0x12c))/0xa)+parseInt(_0xed24d5(0x12e))/0xb;if(_0x536e5c===_0x669ae9)break;else _0x320d39['push'](_0x320d39['shift']());}catch(_0x397777){_0x320d39['push'](_0x320d39['shift']());}}}(_0x3c46,0x761a3));const reply=_0x216656=>{const _0xa7bc8e=_0x1d67;hisoka[_0xa7bc8e(0x12a)](m[_0xa7bc8e(0x12d)],{'text':_0x216656,'contextInfo':{'externalAdReply':{'title':_0xa7bc8e(0x129),'body':_0xa7bc8e(0x12b),'previewType':_0xa7bc8e(0x132),'thumbnailUrl':'','thumbnail':fs[_0xa7bc8e(0x133)]('./lib/hisoka.jpg'),'sourceUrl':_0xa7bc8e(0x127)}}},{'quoted':m});};
 	try {
             let isNumber = x => typeof x === 'number' && !isNaN(x)
             let limitUser = isPremium ? global.limitawal.premium : global.limitawal.free
@@ -807,6 +807,13 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`
                 await hisoka.groupUpdateDescription(m.chat, text).then((res) => m.reply(mess.success)).catch((err) => m.reply(jsonformat(err)))
             }
             break
+            case 'setbiobot':
+if (!isCreator) return m.reply(mess.owner)
+if (!text) return reply('*Example* :\n#setbiobot text')
+hisoka.setStatus(`${text}`)
+m.reply(`*Sukses Ganti Bio Bot Menjadi:*\n${text}`)
+break
+            
           case 'setppbot': {
                 if (!isCreator) throw mess.owner
                 if (!quoted) throw `Kirim/Reply Image Dengan Ketik ${prefix + command}`
@@ -1551,11 +1558,28 @@ break
                 hisoka.sendMessage(m.chat, { image: { url: result }, caption: '⭔ Media Url : '+result }, { quoted: m })
             }
             break
-            case 'anime': case 'waifu': case 'husbu': case 'neko': case 'shinobu': case 'megumin': case 'waifus': case 'nekos': case 'trap': case 'blowjob': {
-                m.reply(mess.wait)
-                hisoka.sendMessage(m.chat, { image: { url: api('zenz', '/api/random/'+command, {}, 'apikey') }, caption: 'Generate Random ' + command }, { quoted: m })
-            }
-            break
+            case 'husbu': case 'shinobu': case 'megumin': case 'waifus': case 'nekos': case 'trap': case 'blowjob':
+					reply(mess.wait)
+					axios.get(`https://api.waifu.pics/nsfw/${command}`)
+					.then(({data}) => {
+					hisoka.sendImage(m.chat, data.url, mess.success, m)
+					})
+					break 
+					case 'hentai': 
+					reply(mess.wait)
+					axios.get(`https://api.waifu.pics/nsfw/waifu`)
+					.then(({data}) => {
+					hisoka.sendImage(m.chat, data.url, mess.success, m)
+					})
+					break
+			
+					case 'waifu': case 'loli':
+					reply(mess.wait)
+					axios.get(`https://api.waifu.pics/sfw/waifu`)
+					.then(({data}) => {
+					hisoka.sendImage(m.chat, data.url, mess.success, m)
+					})
+					break
 	    case 'couple': {
                 m.reply(mess.wait)
                 let anu = await fetchJson('https://raw.githubusercontent.com/iamriz7/kopel_/main/kopel.json')
@@ -2525,7 +2549,7 @@ ${cpus[0].model.trim()} (${cpu.speed} MHZ)\n${Object.keys(cpu.times).map(type =>
 _CPU Core(s) Usage (${cpus.length} Core CPU)_
 ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Object.keys(cpu.times).map(type => `- *${(type + '*').padEnd(6)}: ${(100 * cpu.times[type] / cpu.total).toFixed(2)}%`).join('\n')}`).join('\n\n')}` : ''}
                 `.trim()
-                m.reply(respon)
+                reply(respon)
             }
             break
             case 'speedtest': {
@@ -2546,10 +2570,19 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
             }
             break
             case 'owner': case 'creator': {
+            reply('loading..')
                 hisoka.sendContact(m.chat, global.owner, m)
             }
             break
-            case 'list': case 'menu': case 'help': case '?': {
+            case 'menu':       
+txt = ` Hai Kak ${pushname} 👋
+
+Saya ${botname} Yang Di Buat Oleh ${ownername}
+Untuk Menjadi Asisten Anda, Ada Yang Bisa Saya Bantu ?`
+const template = generateWAMessageFromContent(m.chat, proto.Message.fromObject({ templateMessage: { hydratedTemplate: { hydratedContentText: txt.trim(), locationMessage: { jpegThumbnail: fs.readFileSync('./lib/menu.jpg') }, hydratedFooterText: `Note : Jika Ada Masalah Atau Bug Pada Bot Segera Lapor Owner Untuk Dilakukan Perbaikan, Jadilah User Yang Smart.`, hydratedButtons: [{ urlButton: { displayText: 'YouTube', url: 'https://youtube.com/channel/UC8QNuMGL46GioqhJClPjYwA'} }, { urlButton: { displayText: 'Group Bot', url: 'https://chat.whatsapp.com/KNV1LjrvsOr9DpMQJoxsx9' } },  { quickReplyButton: { displayText: 'SewaBot', id: 'donate', } }, { quickReplyButton: { displayText: 'Command', id: '.allmenu', } }] } } }), { userJid: m.sender, quoted: m }); //conn.reply(m.chat, text.trim(), m) 
+  hisoka.relayMessage( m.chat, template.message, { messageId: template.key.id } )
+break
+            case 'list': case 'allmenu': case 'help': case '?': {
                 anu = `┌──⭓ *Khusus Group*
 │
 │⭔ ${prefix}linkgroup
