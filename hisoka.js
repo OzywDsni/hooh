@@ -532,7 +532,7 @@ Silahkan @${m.mentionedJid[0].split`@`[0]} untuk ketik terima/tolak`
             }
             break
 	    case 'donasi': case 'sewabot': case 'sewa': case 'buypremium': case 'donate': {
-                hisoka.sendMessage(m.chat, { image: { url: 'https://telegra.ph/file/74fd634010128be37972c.jpg' }, caption: `*Hai Kak ${m.pushName}*\n\n Bot Rental Prices\n⭔ 13k Per Group via E-Walet 1 Month\n⭔ 18k via pulsa 1 Month\n\n Premium Price Bot\n⭔ 8k per User 1 bulan\n\nPayment can be via Paypal/link aja/pulsa\n\nFor more details, you can chat with the owner\nhttps://wa.me/6288292024190 (Owner)\n\nDonate For Me : \n\n⭔ Paypal : https://www.paypal.me/Cakhaho\n⭔ Saweria : https://saweria.co/DikaArdnt` }, { quoted: m })
+                hisoka.sendMessage(m.chat, { image: { url: 'https://telegra.ph/file/74fd634010128be37972c.jpg' }, caption: `*Hai Kak ${m.pushName}*\n\n Bot Rental Prices\n⭔ 5k Per Group via All Pay 5 Bulan\n⭔ 10k via pulsa 1 Bulan\n\n Premium Price Bot\n⭔ 10k per User 1 bulan\n\nPayment can be via All Pay/Gopay/Pulsa\n\nMinat / Mau Tanya² Selebihnya, Chat Owner Aja with the owner\nhttps://wa.me/6289525919489 (Owner)\n\nDonate For Me : \n\n⭔ Pulsa : 089525919489\n⭔ Sangat Lah Berarti Bagi Ku` }, { quoted: m })
             }
             break
             case 'sc': {
